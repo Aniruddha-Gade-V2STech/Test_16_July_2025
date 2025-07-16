@@ -16,9 +16,13 @@ const PatientSlice = createSlice({
   name: 'appointment',
   initialState: initialState,
   reducers: {
+
+    // set appointment
     setAppointment: (state, action: PayloadAction<IPatient[]>) => {
       state.appointmentData = action.payload;
     },
+
+    // add appointment
     addAppointment: (state, action: PayloadAction<IPatient>) => {
       console.log('action.payload = ', action.payload);
       state.appointmentData = [...state.appointmentData, action.payload];
@@ -36,9 +40,12 @@ const PatientSlice = createSlice({
     rejectAppointment: (state, action: PayloadAction<RejectReasonType>) => {
       const { id, remarks } = action.payload;
 
+      // find patient data by id
       const index = state?.appointmentData?.findIndex(
         patient => patient?.id === id,
       );
+
+      // update patient data by id and set status to rejected
       if (index !== -1) {
         state.appointmentData[index] = {
           ...state?.appointmentData?.[index],
